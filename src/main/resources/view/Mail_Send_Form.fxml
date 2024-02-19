@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="590.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.mail.Controller.MailFormController">
+   <children>
+      <ImageView fx:id="root" fitHeight="616.0" fitWidth="580.0" opacity="0.7" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../../Project%20Photo/download.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="336.0" layoutY="50.0" opacity="0.61" strokeType="OUTSIDE" strokeWidth="0.0" text="Send Mail" wrappingWidth="177.6103515625">
+         <font>
+            <Font name="Bodoni MT" size="40.0" />
+         </font>
+      </Text>
+      <JFXTextField fx:id="textTo" layoutX="167.0" layoutY="121.0" prefHeight="31.0" prefWidth="345.0" unFocusColor="#e4dfdf" />
+      <JFXTextField fx:id="textSub" layoutX="164.0" layoutY="179.0" prefHeight="31.0" prefWidth="345.0" unFocusColor="#f5f4f4" />
+      <JFXTextArea fx:id="textMsg" layoutX="163.0" layoutY="251.0" opacity="0.45" prefHeight="229.0" prefWidth="352.0" style="-fx-background-color: white;" unFocusColor="#c6bcbc" />
+      <JFXTextField fx:id="textFile" layoutX="168.0" layoutY="515.0" opacity="0.5" prefHeight="31.0" prefWidth="345.0" style="-fx-background-color: white;" />
+      <Text fill="#e8dcdc" layoutX="66.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To:" wrappingWidth="65.6708984375">
+         <font>
+            <Font name="Bell MT" size="24.0" />
+         </font>
+      </Text>
+      <Text fill="#f5eaea" layoutX="64.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject:">
+         <font>
+            <Font name="Bell MT Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text fill="#f5f2f2" layoutX="57.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Massege:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fill="#f2eaea" layoutX="85.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="File:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="31.0" fitWidth="41.0" layoutX="522.0" layoutY="513.0" onMouseClicked="#attachOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Project%20Photo/icons8-file-64.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="425.0" layoutY="561.0" onAction="#sendOnAction" opacity="0.36" prefHeight="31.0" prefWidth="124.0" style="-fx-background-color: Blue; -fx-background-radius: 50;" text="Send" textFill="#e8dada" />
+   </children>
+</AnchorPane>
