@@ -31,11 +31,12 @@ public class MailFormController {
 
     }
 
-    public void sendOnAction(ActionEvent actionEvent) {
+    public void sendOnAction(ActionEvent actionEvent) throws FileNotFoundException {
 
         if (!textTo.getText().isEmpty()) {
             if (textTo.getText().matches("(^[a-zA-Z0-9_.-]+)@([a-zA-Z]+)([\\.])([a-zA-Z]+)$")) {
                 sendMail(textTo.getText(), textSub.getText(), textMsg.getText(), textFile.getText());
+
             } else {
                 try {
                     new allert(Alert.AlertType.INFORMATION, "Error", "Enter valid email address", ButtonType.OK).show();
@@ -52,45 +53,36 @@ public class MailFormController {
         }
     }
 
-    public void sendMail(String to, String subj, String msg, String path) {
+    public void sendMail(String to, String subj, String msg, String path) throws FileNotFoundException {
         String email = to;
         String message = msg;
         String subject = subj;
         File file = new File(path);
-        Mail mail = null;
 
         if (path == null) {
-            mail = new Mail(email, message, subject);
+           Mail mail = new Mail(email, subject, message, null);
+            Thread thread = new Thread(mail);
+
+            thread.start();
+            System.out.println("sent");
+            new allert(Alert.AlertType.INFORMATION, "Sent", "Mail sent successfully", ButtonType.OK).show();
+            clear();
+
         } else {
-            mail = new Mail(email, subject, message, file);
+           Mail mail = new Mail(email, subject, message, file);
+            Thread thread = new Thread(mail);
+
+            thread.start();
+            System.out.println("sent");
+            new allert(Alert.AlertType.INFORMATION, "Sent", "Mail sent successfully", ButtonType.OK).show();
+            clear();
         }
 
-        Thread thread = new Thread(mail);
 
-        mail.valueProperty().addListener((a, oldValue, newValue) -> {
-            if (newValue) {
-                try {
-                    new allert(Alert.AlertType.INFORMATION, "Email", "Mail sent successfully", ButtonType.OK).show();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                clear();
-                System.out.println("sent successfully");
-            } else {
-                try {
-                    new allert(Alert.AlertType.NONE, "Connection Error", "Connection Error!", ButtonType.OK).show();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        thread.setDaemon(true);
-        thread.start();
     }
 
     public void clear() {
-        textTo.clear();
+
         textSub.clear();
         textMsg.clear();
         textFile.clear();

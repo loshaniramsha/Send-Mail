@@ -1,103 +1,99 @@
 package lk.mail.Mail;
 
-import jakarta.activation.DataHandler;
-import jakarta.activation.DataSource;
-import jakarta.activation.FileDataSource;
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeBodyPart;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMultipart;
-import javafx.concurrent.Task;
-import jdk.jfr.FlightRecorder;
-
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
-public class Mail extends Task<Boolean> {
-    private String mail;
-    private String text;
+public class Mail implements Runnable{
+    private String msg;
+    private String to;
     private String subject;
     private File file;
-    private List<String> emails;
 
-    public Mail(String mail, String text, String subject, File file) {
-        this.mail = mail;
-        this.text = text;
+    public Mail(String to, String subject, String msg,  File file) {
+        this.msg = msg;
+        this.to = to;
         this.subject = subject;
         this.file = file;
     }
 
-    public Mail(String mail, String subject , String text) {
-        this.mail = mail;
-        this.text = text;
-        this.subject=subject;
+    public Mail() {
     }
 
-    public Mail(List<String> emails, String text, String subject) {
-        this.text = text;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setSubject(String subject) {
         this.subject = subject;
-        this.emails = emails;
+    }
+    public void setFile(File file) {
+        this.file = file;
     }
 
-
-    @Override
-    protected Boolean call() throws Exception {
-        String from = "sameera.royalseven@gmail.com"; //sender's email address
+    public void outMail() throws MessagingException, IOException {
+        String from = "loshaniramsha01@gmail.com"; //sender's email address
+        String host = "localhost";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", 587);
+
+
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("loshaniramsha01@gmail.com",
-                        "owfj ulnc hpin ggue");    //app password
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("loshaniramsha01@gmail.com", "wpyu boea cyoq blah");  // have to change some settings in SMTP
             }
         });
-        updateProgress(25,100);
 
-        try {
-            MimeMessage mimeMessage = new MimeMessage(session);
-            mimeMessage.setFrom(new InternetAddress(from,"200198@AB"));
-            mimeMessage.setSubject(this.subject);
-            if (emails != null) {
-                for (String email : emails) {
-                    mimeMessage.addRecipient(Message.RecipientType.BCC, new InternetAddress(email));
-                }
-            } else {
-                mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(this.mail));
-            }
-            updateProgress(50,100);
-            Thread.sleep(1000);
 
-            if (file != null) {
-                BodyPart messageBodyPart1 = new MimeBodyPart();
-                messageBodyPart1.setText(text);
+        MimeMessage mimeMessage = new MimeMessage(session);
+        mimeMessage.setFrom(new InternetAddress(from));
+        mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        mimeMessage.setSubject(this.subject);
+        mimeMessage.setText(this.msg);
 
-                MimeBodyPart messageBodyPart2 = new MimeBodyPart();
-                DataSource source = new FileDataSource(file);
-                messageBodyPart2.setDataHandler(new DataHandler(source));
-                messageBodyPart2.setFileName(file.getName());
+        if (file != null) {
 
-                Multipart multipart = new MimeMultipart();
-                multipart.addBodyPart(messageBodyPart1);
-                multipart.addBodyPart(messageBodyPart2);
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.attachFile(this.file);
 
-                mimeMessage.setContent(multipart);
-            } else {
-                mimeMessage.setContent(this.text,"text/html");
-            }
-            updateProgress(90,100);
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(mimeBodyPart);
+
+            mimeMessage.setContent(multipart);
+
             Transport.send(mimeMessage);
-            updateProgress(100,100);
-        }catch (Exception e){
-            return false;
+
+            System.out.println("email sent");
+        } else {
+            Transport.send(mimeMessage);
+            System.out.println("sent");
         }
-        return true;
-    }
     }
 
+    @Override
+    public void run() {
+        if (msg != null) {
+            try {
+                outMail();
+            } catch (MessagingException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("not sent. empty msg!");
+        }
+    }
+}

@@ -15,7 +15,6 @@ import javafx.scene.layout.StackPane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.title;
 
 public class allert extends Alert {
     public allert(AlertType alertType) {

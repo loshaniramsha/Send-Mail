@@ -11,19 +11,19 @@
 
 <AnchorPane prefHeight="590.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.mail.Controller.MailFormController">
    <children>
-      <ImageView fx:id="root" fitHeight="616.0" fitWidth="580.0" opacity="0.7" pickOnBounds="true">
+      <ImageView fx:id="root" fitHeight="616.0" fitWidth="580.0" pickOnBounds="true">
          <image>
             <Image url="@../../../../../../Project%20Photo/download.jpg" />
          </image>
       </ImageView>
-      <Text layoutX="336.0" layoutY="50.0" opacity="0.61" strokeType="OUTSIDE" strokeWidth="0.0" text="Send Mail" wrappingWidth="177.6103515625">
+      <Text fx:id="text" fill="WHITE" layoutX="299.0" layoutY="52.0" opacity="0.56" strokeType="OUTSIDE" strokeWidth="0.0" text="Email Sender" wrappingWidth="252.6103515625">
          <font>
-            <Font name="Bodoni MT" size="40.0" />
+            <Font name="Bodoni MT Bold" size="40.0" />
          </font>
       </Text>
-      <JFXTextField fx:id="textTo" layoutX="167.0" layoutY="121.0" prefHeight="31.0" prefWidth="345.0" unFocusColor="#e4dfdf" />
-      <JFXTextField fx:id="textSub" layoutX="164.0" layoutY="179.0" prefHeight="31.0" prefWidth="345.0" unFocusColor="#f5f4f4" />
-      <JFXTextArea fx:id="textMsg" layoutX="163.0" layoutY="251.0" opacity="0.45" prefHeight="229.0" prefWidth="352.0" style="-fx-background-color: white;" unFocusColor="#c6bcbc" />
+      <JFXTextField fx:id="textTo" layoutX="167.0" layoutY="121.0" prefHeight="31.0" prefWidth="345.0" stylesheets="@../styles.css" unFocusColor="#e4dfdf" />
+      <JFXTextField fx:id="textSub" layoutX="164.0" layoutY="179.0" prefHeight="31.0" prefWidth="345.0" stylesheets="@../styles.css" unFocusColor="#f5f4f4" />
+      <JFXTextArea fx:id="textMsg" layoutX="163.0" layoutY="251.0" opacity="0.8" prefHeight="229.0" prefWidth="352.0" style="-fx-background-color: white;" unFocusColor="#c6bcbc" />
       <JFXTextField fx:id="textFile" layoutX="168.0" layoutY="515.0" opacity="0.5" prefHeight="31.0" prefWidth="345.0" style="-fx-background-color: white;" />
       <Text fill="#e8dcdc" layoutX="66.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To:" wrappingWidth="65.6708984375">
          <font>
